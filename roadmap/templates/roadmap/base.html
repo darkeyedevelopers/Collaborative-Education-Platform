@@ -1,0 +1,47 @@
+{% load staticfiles %}
+{% if request.user %}
+<html>
+    <head>
+        <title>webon blog</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+        <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    </head>
+    <script type="text/javascript">
+       jQuery(document).ready(function()
+        {
+                var d = new Date();
+                d = d.getTime();
+                if (jQuery('#reloadValue').val().length == 0)
+                {
+                        jQuery('#reloadValue').val(d);
+                        jQuery('body').show();
+                }
+                else
+                {
+                        jQuery('#reloadValue').val('');
+                        location.reload();
+                }
+        });
+   </script>
+    <body>
+    <div class="page-header">
+    <a href="#" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+        <h1><a href="#">WEBON Blog</a></h1>
+        <a><span class="glyphicon glyphicon-user"></span>&nbsp;{{ request.session.user  }}</a>
+        <a href="{% url 'roadmap:logout' %}" class="btn btn-default pull-right">LOGOUT</a>
+    </div>
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
+{% else %}
+<h3>Not logged IN </h3>
+{% endif %}

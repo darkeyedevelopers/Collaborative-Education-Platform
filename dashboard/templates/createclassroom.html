@@ -1,0 +1,31 @@
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        $('#createroom').click(function(){
+
+            $.post('/dashboard/createroom',{
+              'class_name' : $('class_name').val(),
+              'course_name' : $('#course_name').val(),
+              'start' : $('#start').val(),
+              'desc' : $('#desc').val(),
+              'end' : $('#end').val(),
+              'csrfmiddlewaretoken': '{{ csrf_token }}',
+              function(data){
+                alert('success');
+              }
+
+            });
+          });
+        });
+</script>
+
+<h3>{{ request.user.username }}</h3>
+  Class Room Name <input type="text" id="class_name"/><br>
+  Course Name <input type="text" id="course_name"/><br>
+  Description <textarea id="desc"/></textarea><br>
+  Start Time <input type="date" id="start"/><br>
+  End Time<input type="date" id="end"/>
+  <button id="createroom">ADD </button>
+</html>

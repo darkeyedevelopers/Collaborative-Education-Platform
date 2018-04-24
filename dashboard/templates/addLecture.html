@@ -1,0 +1,37 @@
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+<script type="text/javascript">
+    $(function() {
+        $('#addlecture').click(function(){
+
+            $.post('/dashboard/addlecture',{
+              'lecture_name' : $('#lecture_name').val(),
+              'lecture_url' : $('#lecture_url').val(),
+              'start' : $('#start').val(),
+              'trans_script' : $('#trans_script').val(),
+              'end' : $('#end').val(),
+              'csrfmiddlewaretoken': '{{ csrf_token }}',
+              function(data){
+                alert('success');
+              }
+
+            });
+          });
+        $(".classroom").autocomplete({
+          source: 'autocompleteclassroom/',
+          minLength: 1,
+        });
+    });
+</script>
+
+<h3>{{ request.user.username }}</h3>
+  Classroom <input type="text" class="classroom"/><br>
+  Lecture Name <input type="text" id="lecture_name"/><br>
+  Lecture URL <input type="url" id="lecture_url"/><br>
+  trans_script <textarea id="trans_script"></textarea>
+  Start Time <input type="date" id="start"/><br>
+  End Time<input type="date" id="end"/>
+  <button id="addlecture">ADD Lecture</button>
+</html>

@@ -1,0 +1,33 @@
+<h3>{{ request.user.username }}</h3>
+<a href="{% url 'dashboard:tocreateroom' %}">+ create classroom </a>
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+  function vote(id,vote_type){
+      if(vote_type) {
+        $.post('/dashboard/upvote/',{
+            'class_id':id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+            });
+      }
+      else {
+          $.post('/dashboard/downvote/',{
+            'class_id':id,
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+            });
+      }
+  }
+</script>
+<a href="{% url 'dashboard:toaddlecture' %}">+ add lecture </a>
+{% for classes in classrooms %}
+{{ classes.class_name }}<br>
+{{ classes.course_name }}<br>
+{{ classes.start_time }}<br>
+{{ classes.end_time }}<br>
+upvotes {{ classes.upvote_cnt }}<br>
+downvotes {{ classes.downvote_cnt }}<br>
+<a href="{% url 'dashboard:show_lectures' classes.id %}">EXPLORE</a>
+<button id="vote" onclick="vote({{classes.id}},true);">upvote</button>
+<button id="vote" onclick="vote({{classes.id}},false);">downvote</button>
+{%endfor%}

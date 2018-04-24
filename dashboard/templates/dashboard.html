@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Welcome {{ request.user.full_name }}!</title>
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+
+        <script src="{% static 'js/jquery-3.2.1.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/fontawesome-all.min.js' %}" type="text/javascript"></script>
+        <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+        <style>
+            .nomargin {
+                margin: 0px;
+            }
+            .nopadding {
+                padding: 0px;
+            }
+            .custom-left-tav-link {
+                color: #ffffff;
+                font-size: 32px;
+                line-height:64px;
+            }
+            .custom-left-tav-link-small {
+                color: #ffffff;
+                font-size: 24px;
+                line-height:50px;
+            }
+            .custom-left-tav-link-small:hover {
+                color: #dddddd;
+                cursor: pointer;
+                text-decoration: none;
+            }
+            .custom-left-tav-link:hover {
+                color: #dddddd;
+                cursor: pointer;
+                text-decoration: none;
+            }
+        </style>
+        <script src="{% static 'js/main.js' %}"></script>
+        <script>
+        function setClicks(){
+          $('#ppt').contents().find('#next').click(function(){
+            websocket.send(JSON.stringify({
+              coin: 'next',
+            }));
+          });
+          $('#ppt').contents().find('#previous').click(function(){
+            websocket.send(JSON.stringify({
+              coin: 'prev',
+            }));
+          });
+        }
+        function onMessage (evt) {
+        }
+        function call(s) {
+
+          if(s == 'next')
+            $('#ppt').contents().find('#next').trigger( "click" );
+          else
+            $('#ppt').contents().find('#previous').trigger( "click" );
+        }
+        </script>
+    </head>
+    <body style="background-color:#eff3f4;" onload="setupWebSocket();">
+        <div class="row col-md-12 nomargin nopadding">
+            <div class="col-md-3" style="height:100vh; background-color:#525c65;">
+                <br>
+                <h6 style="line-height:42px;" class="col-md-12 text-center custom-left-tav-link"><small><strong>Collaborative<br> Education</strong></small></h6>
+                <hr/>
+                <a style="text-decoration:none;" href="/dashboard"><h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-graduation-cap"></i>&emsp;Classrooms</h6></a>
+                <hr/>
+                <a style="text-decoration:none;" href="/roadmap/1"><h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-road"></i>&emsp;Roadmaps</h6></a>
+                <hr/>
+                <a style="text-decoration:none;" href=""><h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-book"></i>&emsp;Courses</h6></a>
+                <hr/>
+            </div>
+            <div class="col-md-9 nopadding">
+                <div class="col-md-12 text-right" style="background-color:#ffffff; box-shadow: 0px 0px 20px 5px #888888;">
+                    <div style="height:5px;"></div>
+                    <div class="dropdown">
+                        <img class="col-md-1" style="cursor:pointer; border-radius:50%;" src="{% static 'images/default.jpg' %}"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton"/>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">{{ request.user.username}}</a>
+                        <hr/>
+                        <a class="dropdown-item" href="#" onclick="changePanel('profile');"><i class="fas fa-user-circle"></i>&nbsp;&nbsp;Profile</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-tasks"></i></i>&nbsp;&nbsp;Settings</a>
+                        <hr/>
+                        <a class="dropdown-item" href="/Accounts/logout"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Logout</a>
+                      </div>
+                    </div>
+                    <div style="height:5px;"></div>
+                </div>
+
+                <!--Classrooms-->
+                <div class="col-md-12">
+                  <br><br>
+                  <div class="col-md-12">
+                    <div class="col-md-12" style="box-shadow: 0px 0px 10px 2px #888888; background-color:#ffffff;" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                      <div style="height:10px;"></div>
+                      <h3><strong><i class="fas fa-plus-square"></i>&nbsp;Add live classrooms...</strong></h3>
+                      <div style="height:10px;"></div>
+                    </div>
+                    <div style="background-color:#ffffff;" class="teacherOnly collapse" id="collapseExample">
+                      <hr/>
+                      <script type="text/javascript">
+                          $(function() {
+                              $('#createroom').click(function(){
+
+                                  $.post('/dashboard/createroom',{
+                                    'class_name' : $('class_name').val(),
+                                    'course_name' : $('#course_name').val(),
+                                    'start' : $('#start').val(),
+                                    'desc' : $('#desc').val(),
+                                    'end' : $('#end').val(),
+                                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                    function(data){
+                                      alert('success');
+                                    }
+
+                                  });
+                                });
+                              });
+                      </script>
+                      <div class="col-md-12 row nomargin">
+                        <div class="col-md-6">
+                          <input class="form-control col-md-12" placeholder="Classroom name..." type="text" id="class_name"/>
+                        </div>
+                        <div class="col-md-6">
+                          <input class="form-control col-md-12" placeholder="Course name..." type="text" id="course_name"/>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="col-md-12">
+                        <div class="col-md-12">
+                          <textarea class="form-control col-md-12" id="desc"/></textarea>
+                        </div>
+                      </div>
+                      <br>
+                      <div class="col-md-12 row nomargin">
+                        <div class="col-md-6">
+                          <input class="form-control col-md-12" placeholder="Start date..." type="date" id="start"/>
+                        </div>
+                        <div class="col-md-6">
+                          <input class="form-control col-md-12" placeholder="End date..." type="date" id="end"/>
+                        </div>
+                      </div>
+                      <br>
+                      <button class="offset-md-3 col-md-6 btn btn-outline-primary" id="createroom"><strong>ADD</strong></button>
+                      <br><br>
+                    </div>
+                    <br>
+                  </div>
+                  <div class="col-md-12">
+                    {% for classes in classrooms %}
+                      <div class="row nomargin col-md-12">
+                        <div class="col-md-8">
+                          <h3><strong>{{ classes.class_name }} | {{ classes.course_name }}</strong></h3>
+                          <h6><small><strong>From {{ classes.start_time }} to {{ classes.end_time }}</strong></small></h6>
+                        </div>
+                        <div class="col-md-4 text-right">
+                          <a href="{% url 'dashboard:show_lectures' classes.id %}"><button class="col-md-4 btn-sm btn btn-outline-success"><strong>Join <i class="fas fa-hand-point-right"></i></strong></button></a>
+                          <br><div style="height:10px;"></div>
+                          <button class="btn btn-primary btn-sm"><strong>{{ classes.upvote_cnt }}&emsp;<i class="fas fa-thumbs-up"></i></strong></button>&emsp;<button class="btn btn-danger btn-sm"><strong>{{ classes.downvote_cnt }}&emsp;<i class="fas fa-thumbs-down"></i></strong></button>
+                        </div>
+                      </div>
+                      <hr/>
+                    {%endfor%}
+                  </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
