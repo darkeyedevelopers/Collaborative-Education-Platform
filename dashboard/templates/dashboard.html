@@ -73,7 +73,7 @@
                 <hr/>
                 <a style="text-decoration:none;" href="/dashboard"><h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-graduation-cap"></i>&emsp;Classrooms</h6></a>
                 <hr/>
-                <a style="text-decoration:none;" href="/roadmap/1"><h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-road"></i>&emsp;Roadmaps</h6></a>
+                <a style="text-decoration:none;" href="/roadmap/"><h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-road"></i>&emsp;Roadmaps</h6></a>
                 <hr/>
                 <a style="text-decoration:none;" href=""><h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-book"></i>&emsp;Courses</h6></a>
                 <hr/>
@@ -111,7 +111,7 @@
                               $('#createroom').click(function(){
 
                                   $.post('/dashboard/createroom',{
-                                    'class_name' : $('class_name').val(),
+                                    'class_name' : $('#class_name').val(),
                                     'course_name' : $('#course_name').val(),
                                     'start' : $('#start').val(),
                                     'desc' : $('#desc').val(),

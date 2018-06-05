@@ -1,5 +1,7 @@
-<!DOCTYPE html>
+
 {% load staticfiles %}
+<!DOCTYPE html>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <html>
     <head>
         <meta charset="utf-8">
@@ -44,13 +46,11 @@
                 <br>
                 <h6 style="line-height:42px;" class="col-md-12 text-center custom-left-tav-link"><small><strong>Collaborative<br> Education</strong></small></h6>
                 <hr/>
-                <h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-tachometer-alt"></i>&emsp;Dashboard</h6>
+                <a style="text-decoration:none;" href="/dashboard"><h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-graduation-cap"></i>&emsp;Classrooms</h6></a>
                 <hr/>
-                <h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-graduation-cap"></i>&emsp;Classrooms</h6>
+                <a style="text-decoration:none;" href="/roadmap/"><h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-road"></i>&emsp;Roadmaps</h6></a>
                 <hr/>
-                <h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-road"></i>&emsp;Roadmaps</h6>
-                <hr/>
-                <h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-book"></i>&emsp;Courses</h6>
+                <a style="text-decoration:none;" href=""><h6 class="col-md-12 custom-left-tav-link-small"><i style="color:#ffffff;" class="fas fa-book"></i>&emsp;Courses</h6></a>
                 <hr/>
             </div>
             <div class="col-md-9 nopadding">
@@ -197,13 +197,16 @@
                   <div class="col-md-8">
                     <div class="col-md-12" id="live">
                       <iframe id="utube" class="liveChild" width="600px" height="340px" src="{{ lectures.0.lecture_url }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                      <iframe style="display:none;" id="slides" class="liveChild" width="600px" height="340px" src="/static/ViewerJS/index.html#../PrototypingPresentation.odp" frameborder="0" allowfullscreen></iframe>
+                      <iframe style="display:none;" id="slides" class="liveChild" width="600px" height="340px" src="/static/ViewerJS/index.html#../Databases.pdf" frameborder="0" allowfullscreen></iframe>
                       <iframe style="display:none;" id="code" class="liveChild" width="600px" height="340px" src="/Compile_run/" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                       <div class="col-md-12 text-center">
                         <button onclick="switchTo('utube')" class="btn btn-secondary"><strong><i class="fas fa-wifi"></i></strong></button>
                         <button onclick="switchTo('slides')" class="btn btn-secondary"><strong><i class="fab fa-slideshare"></i></strong></button>
                         <button onclick="switchTo('code')" class="btn btn-secondary"><strong><i class="fas fa-code"></i></strong></button>
                         <button onclick="expand()" class="btn btn-secondary"><strong><i class="fas fa-expand"></i></strong></button>
+                      </div>
+                      <div>
+                        <a href="{% url 'discussion:disc' classroom.class_name %}"><button>Join Discussion</button></a>
                       </div>
                     </div>
                   </div>

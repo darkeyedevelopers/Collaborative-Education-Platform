@@ -56,8 +56,9 @@ def autocompleteclassroom(request):
 	return HttpResponse(data, mimetype)
 
 def show_lectures(request,classes_id):
-    class_lectures = lectures.objects.filter(classroom=classrooms.objects.get(id=classes_id))
-    return render(request,'lectures.html',{'lectures':class_lectures})
+    classroom=classrooms.objects.get(id=classes_id)
+    class_lectures = lectures.objects.filter(classroom=classroom)
+    return render(request,'lectures.html',{'lectures':class_lectures,'classroom':classroom})
 
 def upvote(request):
     classes_id = request.POST.get('class_id')

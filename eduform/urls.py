@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^roadmap/', include('roadmap.urls')),
 	url(r'^Accounts/', include('Accounts.urls_django_auth')),
     url(r'^Compile_run/', include('Compile_run.urls')),
+    url(r'^discussion/', include('discussion.urls')),
 ]

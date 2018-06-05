@@ -1,6 +1,6 @@
 from channels import route
 
-from dashboard import consumers
+from discussion import consumers
 
 
 channel_routing = [
